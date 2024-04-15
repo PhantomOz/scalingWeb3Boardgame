@@ -1,8 +1,10 @@
 "use client"
 import { isValidMove } from "@/utils/Moves";
+import { BOARD_CONTENT, BoardContent } from "chess-fen";
+import Fen from "chess-fen/dist/Fen";
 import { isValidElement, useEffect, useState } from "react";
 
-export default function Square({ piece, index, draggedElement, setDElement }: { piece: string, index: number, setDElement: (e: [EventTarget, string, HTMLDivElement] | undefined) => void, draggedElement: [EventTarget, string, HTMLDivElement] | undefined | [HTMLDivElement, string, HTMLDivElement] }) {
+export default function Square({ piece, index, draggedElement, setDElement, board, setPieces }: { piece: string, index: number, setDElement: (e: [EventTarget, BoardContent, HTMLDivElement] | undefined) => void, draggedElement: [EventTarget, BoardContent, HTMLDivElement] | undefined | [HTMLDivElement, string, HTMLDivElement], board: Fen, setPieces: (e: Fen) => void }) {
     const [color, setColor] = useState("");
     const [cursor, setCursor] = useState("cursor-grab");
     const rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -19,16 +21,16 @@ export default function Square({ piece, index, draggedElement, setDElement }: { 
 
     useEffect(() => {
         if (row % 2 === 0) {
-            setColor(index % 2 === 0 ? "bg-green-600" : "bg-white");
-        } else {
             setColor(index % 2 === 0 ? "bg-white" : "bg-green-600");
+        } else {
+            setColor(index % 2 === 0 ? "bg-green-600" : "bg-white");
         }
     }, [index, row]);
 
 
     const setUp = (e: any) => {
         let de = e;
-        setDElement([de.target, piece, e.target.parentNode]);
+        setDElement([de.target, piece as BoardContent, e.target.parentNode]);
     }
 
     function handleOnDrag(e: any) {
@@ -37,13 +39,10 @@ export default function Square({ piece, index, draggedElement, setDElement }: { 
     };
     function handleOnDrop(e: any) {
         e.preventDefault();
-        if (draggedElement && isValidMove(draggedElement, e.target)) {
-            let target = e.target as HTMLDivElement;
-            if (e.target.hasChildNodes()) {
-                target = e.target.parentNode as HTMLDivElement;
-                target.removeChild(e.target);
-            }
-            target.append(draggedElement[0] as Node);
+        // console.log(isValidMove(draggedElement, index));
+        if (draggedElement && isValidMove(draggedElement, index, board, `${rows[idNum]}${row}`)) {
+            const from = draggedElement[2].id.split("-")[0];
+            setPieces(board.clear(from).update(`${rows[idNum]}${row}`, BOARD_CONTENT[draggedElement[1] as BoardContent]));
             setDElement(undefined);
         }
     }
@@ -54,5 +53,5 @@ export default function Square({ piece, index, draggedElement, setDElement }: { 
 
 
 
-    return <div id={`${rows[idNum]}${row}`} onDragOver={handleOnDragOver} onDrop={handleOnDrop} className={` w-[70px] h-[70px] backdrop-blur-2xl z-[-9] ${color} relative`}><div draggable id={`${rows[idNum]}${row}`} onDragStart={handleOnDrag} onDrop={handleOnDrop} className={`${cursor} square -z-10`}>{pieces[piece.toLowerCase()]}</div></div>
+    return <div id={`${rows[idNum]}${row}-${index}`} onDragOver={handleOnDragOver} onDrop={handleOnDrop} className={` w-[70px] h-[70px] backdrop-blur-2xl z-[-9] ${color} relative`}><div draggable id={`${index}`} onDragStart={handleOnDrag} onDrop={handleOnDrop} className={`${cursor} square -z-10`}>{pieces[piece.toLowerCase()]}</div></div>
 }

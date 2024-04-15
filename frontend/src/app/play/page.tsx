@@ -2,17 +2,22 @@
 import Fen from "chess-fen/dist/Fen";
 import Square from "../../components/Square";
 import { useEffect, useState } from "react";
+import { BOARD_CONTENT, BoardContent } from "chess-fen";
 
 export default function Arena() {
-    const [draggedElement, setDElement] = useState<[EventTarget, string, HTMLDivElement]>();
+    const [draggedElement, setDElement] = useState<[EventTarget, BoardContent, HTMLDivElement]>();
     const [turn, setTurn] = useState<boolean>(false);
     const [pieces, setPieces] = useState<Fen>(new Fen(Fen.startingPosition));
 
-    useEffect(() => {
-        if (draggedElement === undefined) {
-            setTurn(!turn);
-        }
-    }, [draggedElement]);
+    // useEffect(() => {
+    //     if (draggedElement === undefined) {
+    //         if (turn) {
+    //             // setPieces(new);
+    //             setPieces(new Fen().clear("e2").update("e4", BOARD_CONTENT.P));
+    //             console.log(pieces.printBoard());
+    //         }
+    //     }
+    // }, [draggedElement]);
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -28,8 +33,8 @@ export default function Arena() {
                         <p>10:00</p>
                     </div>
                 </div>
-                <div className={`z-10 w-[560px] h-[560px] flex flex-row ${turn ? "flex-wrap" : "flex-wrap-reverse"}`}>
-                    {pieces?.board.map((piece, index) => piece.map((pie, ind) => <Square key={index} piece={pie} index={8 * index + ind} setDElement={setDElement} draggedElement={draggedElement} />))}
+                <div className={`z-10 w-[560px] h-[560px] flex flex-row ${"flex-wrap"}`}>
+                    {pieces?.board.map((piece, index) => piece.map((pie, ind) => <Square key={8 * index + ind} piece={pie} index={8 * index + ind} setDElement={setDElement} draggedElement={draggedElement} board={pieces} setPieces={setPieces} />))}
                 </div>
                 <div className="flex flex-row w-[560px] gap-4 items-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:rounded-b-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
                     <div className="border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"></div>
