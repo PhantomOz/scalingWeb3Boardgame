@@ -4,10 +4,11 @@ import {games} from "../components/common/Constants"
 import NavBar from "@/components/common/Navbar"
 import Footer from "@/components/common/Footer"
 
+
 export default function page() {
   return (
     <>
-    <NavBar />
+  
     <div className="bg-homeBack">
 
     

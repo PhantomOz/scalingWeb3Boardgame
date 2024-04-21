@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import  ConnectButton  from "../../hooks/useConnectButton";
 import { JSX, SVGProps } from "react"
 
 
@@ -12,30 +11,10 @@ export default function NavBar() {
         <PlayIcon className="h-6 w-6  text-gray-400" />
           <span className="text-lg font-bold text-gray-400">Board Game Hub</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-4">
-          <Link className="text-gray-400 hover:text-gray-50" href="#">
-            Games
-          </Link>
-          <Link className="text-gray-400 hover:text-gray-50" href="#">
-            About
-          </Link>
-          <Link className="text-gray-400 hover:text-gray-50" href="#">
-            Contact
-          </Link>
-        </nav>
       </div>
       <div className="flex items-center gap-4">
-        <form className="relative">
-          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <Input
-            className="pl-10 pr-4 py-2 rounded-md focus:ring-2 focus:ring-gray-500 focus:outline-none bg-gray-800 text-gray-50 focus:bg-gray-700"
-            placeholder="Search games..."
-            type="search"
-          />
-        </form>
-        <Button size="sm" variant={"default"}>
-          <MenuIcon className="w-6 h-6 text-gray-50" />
-        </Button>
+      
+      <ConnectButton />
       </div>
     </header>
   )
