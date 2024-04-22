@@ -23,7 +23,7 @@ The engine is designed to support various games, providing users with the flexib
 
 The engine prioritizes performance, aiming to deliver a seamless and responsive gaming experience for players.
 
-#### Chess Game Powered by Stackfish: 
+#### Game Engine Powered by Stackfish: 
 
 The engine currently hosts a chess game powered by Stackfish, showcasing its capabilities in supporting specific game implementations.
 
@@ -35,7 +35,6 @@ The engine currently hosts a chess game powered by Stackfish, showcasing its cap
 
 ## Support and Feedback
 
-Support and Feedback
 For any questions, support, or feedback regarding the game engine, please reach out to the development team 
 We hope you enjoy playing the chess game 
 
