@@ -1,7 +1,7 @@
 
 ## Project Name: Game Board Engine
 ## Introduction
-This is the ReadMe file for the custom game engine running on a custom Layer 2, powered by an IPC Subnet. The engine is designed to support various board games and is currently hosting a chess game powered by Stackfish.
+This is the ReadMe file for the custom game engine running on a custom Layer 2, powered by an IPC Subnet. The engine is designed to support various board games and is currently hosting a chess game powered by Stockfish.
 ## Game Engine Overview
 
 The game engine is built on a custom Layer 2 infrastructure, leveraging the power of an IPC subnet to provide a seamless and efficient gaming experience. The engine is designed to be versatile and adaptable to support a wide range of games, with a specific focus on optimizing performance and user experience.
@@ -25,7 +25,7 @@ The engine prioritizes performance, aiming to deliver a seamless and responsive 
 
 #### Game Engine Powered by Stackfish: 
 
-The engine currently hosts a chess game powered by Stackfish, showcasing its capabilities in supporting specific game implementations.
+The engine currently hosts a chess game powered by Stockfish, showcasing its capabilities in supporting specific game implementations.
 
 ## Operation Diagram
 
