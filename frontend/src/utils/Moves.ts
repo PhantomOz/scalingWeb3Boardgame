@@ -189,7 +189,7 @@ export const isValidMove = (
 };
 
 export const isOpponentPiece = (piece: string, board: Fen): boolean => {
-  console.log(target);
+  // console.log(target);
   let targetPiece = board.get(target);
   if (targetPiece) {
     return (
@@ -209,8 +209,8 @@ export const isEmpty = () => {
 };
 
 export const isEmptyRoute = (position: number): boolean => {
-  console.log(position);
-  console.log(Board.board);
+  // console.log(position);
+  // console.log(Board.board);
   console.log(Math.floor(Math.abs(position) / 8));
   return (
     Board.board[Math.floor(Math.abs(position) / 8)][Math.abs(position) % 8] ===

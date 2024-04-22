@@ -1,10 +1,14 @@
 "use client"
 import { isValidMove } from "@/utils/Moves";
+import { Board, Square as chessSquare } from "chess-engine-ts";
 import { BOARD_CONTENT, BoardContent } from "chess-fen";
+// const game = new Game()
+import { Game, getFen, aiMove } from 'js-chess-engine'
+
 import Fen from "chess-fen/dist/Fen";
 import { isValidElement, useEffect, useState } from "react";
 
-export default function Square({ piece, index, draggedElement, setDElement, board, setPieces }: { piece: string, index: number, setDElement: (e: [EventTarget, BoardContent, HTMLDivElement] | undefined) => void, draggedElement: [EventTarget, BoardContent, HTMLDivElement] | undefined | [HTMLDivElement, string, HTMLDivElement], board: Fen, setPieces: (e: Fen) => void }) {
+export default function Square({ Move, Capture, Illegal, Check, Checkmate, piece, index, draggedElement, setDElement, board, setPieces, boardEngine, setBoardEngine }: { Move: any, Capture: any, Illegal: any, Check: any, Checkmate: any, piece: string, index: number, setDElement: (e: [EventTarget, BoardContent, HTMLDivElement] | undefined) => void, draggedElement: [EventTarget, BoardContent, HTMLDivElement] | undefined | [HTMLDivElement, string, HTMLDivElement], board: Fen, setPieces: (e: Fen) => void, boardEngine: Game, setBoardEngine: (e: Game) => void }) {
     const [color, setColor] = useState("");
     const [cursor, setCursor] = useState("cursor-grab");
     const rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -37,14 +41,49 @@ export default function Square({ piece, index, draggedElement, setDElement, boar
         setUp(e);
         setCursor("cursor-grabbing");
     };
+    function nextMove() {
+        const move = aiMove(boardEngine.board.configuration);
+        handleMoves(Object.keys(move)[0], move[Object.keys(move)[0]]);
+    };
+
+    function handleMoves(fro?: any, _to?: any) {
+        if (draggedElement) {
+            const from = fro ? fro : draggedElement[2].id.split("-")[0] as chessSquare;
+            const to = _to ? _to : `${rows[idNum]}${row}` as chessSquare;
+            const capt = board.isEmpty(to);
+            console.log(boardEngine);
+
+            try {
+                if (boardEngine.move(from, to)) {
+
+                    let farr = getFen(boardEngine.board.configuration);
+                    // console.log(farr)
+                    setPieces(new Fen(farr));
+                    setDElement(undefined);
+
+                    if (boardEngine.board.configuration.checkMate) {
+                        Checkmate.current.play();
+                    } else if (boardEngine.board.configuration.check) {
+                        Check.current.play();
+                    } else if (!capt) {
+                        Capture.current.play();
+                    } else {
+                        Move.current.play();
+                    }
+                    if (boardEngine.board.configuration.turn === "black") {
+                        nextMove();
+                    }
+                }
+            } catch (error) {
+                Illegal.current.play();
+            }
+
+        }
+    }
     function handleOnDrop(e: any) {
         e.preventDefault();
-        // console.log(isValidMove(draggedElement, index));
-        if (draggedElement && isValidMove(draggedElement, index, board, `${rows[idNum]}${row}`)) {
-            const from = draggedElement[2].id.split("-")[0];
-            setPieces(board.clear(from).update(`${rows[idNum]}${row}`, BOARD_CONTENT[draggedElement[1] as BoardContent]));
-            setDElement(undefined);
-        }
+        handleMoves();
+
     }
     function handleOnDragOver(e: any) {
         e.preventDefault();
