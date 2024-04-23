@@ -30,7 +30,7 @@ The engine currently hosts a chess game powered by Stockfish, showcasing its cap
 ## Operation Diagram
 
 
-![photo_2024-04-22_02-36-58](https://github.com/PhantomOz/board-contract/assets/90451195/7572d2ed-61db-4f33-b293-ba49544dd249)
+![photo_2024-04-22_02-36-58](https://github.com/PhantomOz/scalingWeb3Boardgame/assets/90451195/d0ed21e8-7b13-4668-8bc4-aac4c5de903f)
 
 
 ## Support and Feedback
